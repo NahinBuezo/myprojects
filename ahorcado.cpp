@@ -12,11 +12,11 @@ void comprobar(char*,char[], char*);
 void dibujar(int,char**);
 
 int main(int argc, char*argv[]){
-    vector <char*> diccionario;
+  vector <char*> diccionario;
 	srand(time(0));
     
 	char* lista;
-	char*lista2;
+	char lista2[5000];
     
     int respuesta=1;
     int op;
@@ -25,7 +25,7 @@ int main(int argc, char*argv[]){
     ifstream fe("palabras.txt",ifstream::in);
     
     while(fe>>lista2);
-    fe.close();
+  
     lista=strtok(lista2," ,");
     
     while(lista!=NULL){
@@ -34,40 +34,32 @@ int main(int argc, char*argv[]){
         
     }
     
-    
-    
+   
+     cout<<"Bienvenido al ahorcado"<<endl;
      while(respuesta==1){
-    
-        cout<<"Opciones\n1. Palabras aleatorias\n2. Ingresar palabra"<<endl;
-        cin>>op;
-        while(op!=1&&op!=2){
-           cout<<"Opciones\n1. Palabras aleatorias\n2. Ingresar palabra"<<endl;
-           cin>>op;
-        }
-
-        if(op==1){
-          int num=rand()%diccionario.size();
-          palabra=diccionario.at(num);
-          //palabra=new char[diccionario.at(num).length()+1];
-         // string copia=diccionario.at(num);
-          //strcpy(palabra,copia.c_str());
-      
-          jugar(palabra);
-        }
-        if(op==2){
-        /**   char nueva[30]="";
-           cout<<"Ingrese palabra: "<<endl;
-           cin>>nueva;
-           diccionario.push_back(nueva);
-           jugar(nueva);
-           **/
-            
-        }
-        cout<<"Desea seguir jugando? 1=si"<<endl;
-        cin>>respuesta;
+          cout<<"Opciones de juego\n1. Palabra aleatoria\n2. Ingresar palabra\n3. Salir"<<endl;
+          cin>>op;
+          if(op==1){
+             int num=rand()%diccionario.size();
+             palabra=diccionario.at(num);
+             jugar(palabra);
+         }
+         if(op==2){
+            char word[25];
+            for(int i=0; i<25;i++){
+              word[i]=' ';
+            }
+            cout<<"Ingrese la palabra: "<<endl;
+            cin>>word;
+            jugar(word);
+         }
+         cout<<"Desea seguir jugando? 1=si"<<endl;
+         cin>>respuesta;
      }
- 
+
+    diccionario.clear();
     return 0;
+    
 }
 
 void jugar(char* palabra){
@@ -79,6 +71,7 @@ void jugar(char* palabra){
     int intentos=5;
     char secreto[strlen(palabra)];
     char *dibujo[20];
+
     for(int i=0; i<20;i++){
         dibujo[i]=new char[20];
     }
@@ -136,7 +129,7 @@ void jugar(char* palabra){
          **/
          if(completo==true){
           terminar=true;
-          cout<<"************FELICIDADES GANASTE*********";
+          cout<<"************FELICIDADES GANASTE*********"<<endl;
            for(int i=0; i<20; i++){
               delete[]dibujo[i];
            }
@@ -152,7 +145,7 @@ void comprobar(char* letra,char secreto[], char* palabra){
   for(int j=0; j<strlen(letra);j++){
     for(int i=0; i<strlen(palabra);i++){
         if(letra[j]==palabra[i]){
-            secreto[i]=letra[0];
+            secreto[i]=letra[j];
         }
     }
   } 
