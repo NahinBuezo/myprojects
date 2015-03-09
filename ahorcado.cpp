@@ -1,10 +1,14 @@
 #include <iostream>
 #include <cstring>
 #include <ctime>
+#include <iostream>
+#include <cstring>
+#include <ctime>
 #include <cstdlib>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 void jugar(char*);
@@ -12,11 +16,12 @@ void comprobar(char*,char[], char*);
 void dibujar(int,char**);
 
 int main(int argc, char*argv[]){
-  vector <char*> diccionario;
-	srand(time(0));
-    
-	char* lista;
-	char lista2[5000];
+   vector <char*> diccionario;
+   srand(time(0));
+   stringstream ss;
+   char* lista;
+   char lista2[5000];
+
     
     int respuesta=1;
     int op;
@@ -33,7 +38,13 @@ int main(int argc, char*argv[]){
         lista=strtok(NULL," ,");
         
     }
-    
+    fe.close();
+    for(int i=0; i<diccionario.size(); i++){
+      if(i!=0){
+        ss<<",";
+      }
+      ss<<diccionario.at(i);
+    }
    
      cout<<"Bienvenido al ahorcado"<<endl;
      while(respuesta==1){
@@ -51,12 +62,19 @@ int main(int argc, char*argv[]){
             }
             cout<<"Ingrese la palabra: "<<endl;
             cin>>word;
+            strcat(lista2,",");
+            strcat(lista2,word);
+            ss<<","<<word;
             jugar(word);
          }
          cout<<"Desea seguir jugando? 1=si"<<endl;
          cin>>respuesta;
      }
-
+    
+    
+    ofstream es("palabras.txt");
+    es<<ss.str();
+    es.close();
     diccionario.clear();
     return 0;
     
